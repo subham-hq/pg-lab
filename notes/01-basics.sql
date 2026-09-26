@@ -96,9 +96,3 @@ SELECT * FROM person ORDER BY id FETCH FIRST 5 ROWS ONLY;   -- SQL-standard spel
 SELECT *
 FROM person
 WHERE country_of_birth IN ('China', 'Brazil', 'France');
-
-
--- ── Gotchas I hit today (my own words) ───────────────────────
--- 1.
--- 2.
--- 3.
