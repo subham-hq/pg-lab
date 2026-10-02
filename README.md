@@ -63,7 +63,7 @@ Each file reloads the data it needs first, so the files run in any order.
 | [`10-foreign-keys.sql`](notes/10-foreign-keys.sql) | Foreign keys, ON DELETE actions, relationship shapes | ✅ |
 | [`11-joins.sql`](notes/11-joins.sql) | INNER, LEFT, FULL and CROSS joins, anti-joins | ✅ |
 | [`12-export-csv.sql`](notes/12-export-csv.sql) | `\copy` to and from CSV, `\copy` vs `COPY` | ✅ |
-| `13-id-generation.sql` | Sequences, identity columns, UUIDs | 🚧 |
+| [`13-id-generation.sql`](notes/13-id-generation.sql) | Sequences, identity columns, extensions, UUIDs (v4 and v7) | ✅ |
 
 ## Gotchas covered
 
@@ -85,6 +85,10 @@ The traps worth remembering, and where each one is shown:
 - Postgres doesn't index foreign-key columns for you. ([10](notes/10-foreign-keys.sql))
 - A `WHERE` condition on the right-hand table turns a `LEFT JOIN` into an inner join. ([11](notes/11-joins.sql))
 - `\copy` writes the file on your machine; `COPY` writes it on the database server. ([12](notes/12-export-csv.sql))
+- `ALTER SEQUENCE … RESTART` ignores the ids already in the table; `setval()` to the current maximum fixes the collision. ([13](notes/13-id-generation.sql))
+- Sequence numbers are never given back, not even by `ROLLBACK`, so ids have gaps. ([13](notes/13-id-generation.sql))
+- UUIDs copied from one run match nothing in the next, and `UPDATE 0` is not an error. ([13](notes/13-id-generation.sql))
+- Random v4 UUID keys scatter inserts across the index; time-ordered UUIDv7 keeps them in order. ([13](notes/13-id-generation.sql))
 
 ## Proof-of-skill drills
 
